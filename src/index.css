@@ -1,0 +1,7 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+body {
+  background-color: rgb(37, 37, 37);
+  color: whitesmoke;
+}

@@ -1,54 +1,73 @@
-import {createContext, useContext, useState, useEffect} from "react"
-import api from "../config/axios";
-
-// create context
-// provide context
-// use context
+import { createContext, useContext, useState, useEffect } from "react";
 
 const NewsContext = createContext();
 
-const NewsContextProvider = ({children}) => {
+const isLocalhost = () => {
+  if (typeof window === "undefined") return false;
+  return ["localhost", "127.0.0.1"].includes(window.location.hostname);
+};
 
-    const [news, setNews] = useState([]);
-    const [loading, setLoading] = useState(false);
-    
-    const fetchNews = async (url="/everything?q=india") => {
+const getNewsUrl = (url = "/everything?q=india") => {
+  const match = url.match(/q=([^&]+)/);
+  const query = match ? decodeURIComponent(match[1]) : "india";
 
-        try {
-                setLoading(true);
-                const response = await api.get(`${url}&apiKey=${import.meta.env.VITE_API_KEY}`)
-                const articles = response.data.articles ?? []
-                setNews(articles)
-                setLoading(false);
-                return articles
-        } catch(error){
-            console.log(error)
-             setLoading(false);
-            return []
-        }
-    
+  if (isLocalhost() && import.meta.env.VITE_API_KEY) {
+    return `https://newsapi.org/v2/everything?q=${encodeURIComponent(query)}&apiKey=${import.meta.env.VITE_API_KEY}`;
   }
 
-   const value = {
-        news,
-        setNews,
-        fetchNews,
-        loading
-    }
-  
-    useEffect(()=>{
-        fetchNews();
-    }, [])
+  return `/api/news?q=${encodeURIComponent(query)}`;
+};
 
-    return (
-        <NewsContext.Provider value={value}>
-            {children}
-        </NewsContext.Provider>
-    )
-}
+const NewsContextProvider = ({ children }) => {
+  const [news, setNews] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const fetchNews = async (url = "/everything?q=india") => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const response = await fetch(getNewsUrl(url));
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData?.message || "Failed to fetch news");
+      }
+
+      const data = await response.json();
+      const articles = data?.articles ?? [];
+      setNews(articles);
+      setLoading(false);
+      return articles;
+    } catch (err) {
+      console.error(err);
+      setError(err.message || "Something went wrong while fetching news.");
+      setNews([]);
+      setLoading(false);
+      return [];
+    }
+  };
+
+  const value = {
+    news,
+    setNews,
+    fetchNews,
+    loading,
+    error,
+  };
+
+  useEffect(() => {
+    fetchNews();
+  }, []);
+
+  return (
+    <NewsContext.Provider value={value}>{children}</NewsContext.Provider>
+  );
+};
 
 const useNewsContext = () => {
-    return useContext(NewsContext)
-}
+  return useContext(NewsContext);
+};
 
-export {NewsContextProvider, useNewsContext}
+export { NewsContextProvider, useNewsContext };

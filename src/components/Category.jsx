@@ -6,7 +6,7 @@ const Category = () => {
 
   const {fetchNews} = useNewsContext();
 
-  const categories = ["business", "entertainment", "general", "health", "sciences", "sports", "technology"]
+  const categories = ["business", "entertainment", "general", "health", "science", "sports", "technology"]
 
   const handleClick = async (e) => {
 

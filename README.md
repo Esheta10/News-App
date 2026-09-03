@@ -4,6 +4,10 @@ Spill the Tea-V is a React-based news application that fetches live headlines fr
 
 <img width="1162" height="636" alt="image" src="https://github.com/user-attachments/assets/a98a3cb4-81be-4762-b229-46bd025c6de6" />
 
+<img width="1003" height="631" alt="image" src="https://github.com/user-attachments/assets/028f2446-a497-4896-97c5-8064a42092e5" />
+
+
+
 
 The app is built with Vite, React, Axios, Tailwind CSS, and DaisyUI, making it lightweight, responsive, and easy to extend.
 

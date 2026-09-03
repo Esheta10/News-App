@@ -2,6 +2,13 @@
 
 Spill the Tea-V is a React-based news application that fetches live headlines from the NewsAPI and displays them in a modern card layout. Users can browse a default set of articles on load, search for specific news topics, and filter by categories like business, sports, technology, and health.
 
+<img width="1162" height="636" alt="image" src="https://github.com/user-attachments/assets/a98a3cb4-81be-4762-b229-46bd025c6de6" />
+
+<img width="1003" height="631" alt="image" src="https://github.com/user-attachments/assets/028f2446-a497-4896-97c5-8064a42092e5" />
+
+
+
+
 The app is built with Vite, React, Axios, Tailwind CSS, and DaisyUI, making it lightweight, responsive, and easy to extend.
 
 ---
@@ -330,7 +337,7 @@ This project can be expanded with features like:
 
 ## Summary
 
-Spill the Tea-V is a clean and beginner-friendly React project that demonstrates how to connect a frontend application to a live API, manage global state, handle loading and errors, and build a responsive news feed UI.
+Spill the Tea-V is a React project that demonstrates how to connect a frontend application to a live API, manage global state, handle loading and errors, and build a responsive news feed UI.
 
 It is a great example of how to create a small but fully functional app with modern frontend tooling.
 
